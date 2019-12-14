@@ -64,6 +64,10 @@
 # Cache used by TypeScript's incremental build
 /server/*.tsbuildinfo
 
+
+# .gitignore
+/server/.gitignore
+
 ######### Client folder #########
 # dependencies
 /client/node_modules
@@ -86,3 +90,6 @@
 /client/npm-debug.log*
 /client/yarn-debug.log*
 /client/yarn-error.log*
+
+# .gitignore
+/client/.gitignore
