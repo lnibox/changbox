@@ -28,7 +28,10 @@
     "migrate": "node ./dist/migrate",
     "prestart": "npm run build",
     "start": "node -r source-map-support/register .",
-    "prepublishOnly": "npm run test"
+    "prepublishOnly": "npm run test",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon --ignore 'public/' --ignore 'node_modules/' index.js",
+    "client": "npm run start --prefix ../client"
   },
   "repository": {
     "type": "git"
@@ -66,10 +69,12 @@
     "@types/node": "^10.17.6",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
+    "concurrently": "^5.0.1",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-eslint-plugin": "^2.1.0",
     "eslint-plugin-mocha": "^6.2.2",
+    "nodemon": "^2.0.2",
     "source-map-support": "^0.5.16",
     "typescript": "~3.7.3"
   }
