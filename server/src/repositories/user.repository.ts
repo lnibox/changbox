@@ -1,10 +1,16 @@
+// Copyright IBM Corp. 2018. All Rights Reserved.
+// Node module: loopback4-example-shopping
+// This file is licensed under the MIT License.
+// License text available at https://opensource.org/licenses/MIT
+
 import {
   DefaultCrudRepository,
-  HasOneRepositoryFactory,
+  juggler,
+  HasManyRepositoryFactory,
   repository,
+  HasOneRepositoryFactory,
 } from '@loopback/repository';
-import {User, UserRelations, UserCredentials} from '../models';
-import {MongoDataSource} from '../datasources';
+import {User, UserCredentials} from '../models';
 import {inject, Getter} from '@loopback/core';
 import {UserCredentialsRepository} from './user-credentials.repository';
 
@@ -15,22 +21,37 @@ export type Credentials = {
 
 export class UserRepository extends DefaultCrudRepository<
   User,
-  typeof User.prototype.id,
-  UserRelations
+  typeof User.prototype.id
 > {
   public readonly userCredentials: HasOneRepositoryFactory<
     UserCredentials,
     typeof User.prototype.id
   >;
+
   constructor(
-    @inject('datasources.mongo') dataSource: MongoDataSource,
+    @inject('datasources.mongo') protected datasource: juggler.DataSource,
     @repository.getter('UserCredentialsRepository')
-    protected userCredentialsRepository: Getter<UserCredentialsRepository>,
+    protected userCredentialsRepositoryGetter: Getter<
+      UserCredentialsRepository
+    >,
   ) {
-    super(User, dataSource);
+    super(User, datasource);
     this.userCredentials = this.createHasOneRepositoryFactoryFor(
       'userCredentials',
-      userCredentialsRepository,
+      userCredentialsRepositoryGetter,
     );
+  }
+
+  async findCredentials(
+    userId: typeof User.prototype.id,
+  ): Promise<UserCredentials | undefined> {
+    try {
+      return await this.userCredentials(userId).get();
+    } catch (err) {
+      if (err.code === 'ENTITY_NOT_FOUND') {
+        return undefined;
+      }
+      throw err;
+    }
   }
 }

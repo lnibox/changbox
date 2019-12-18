@@ -1,4 +1,9 @@
-import {Entity, model, property, hasOne} from '@loopback/repository';
+// Copyright IBM Corp. 2019. All Rights Reserved.
+// Node module: loopback4-example-shopping
+// This file is licensed under the MIT License.
+// License text available at https://opensource.org/licenses/MIT
+
+import {Entity, model, property, hasMany, hasOne} from '@loopback/repository';
 import {UserCredentials} from './user-credentials.model';
 
 @model({
@@ -20,7 +25,7 @@ export class User extends Entity {
     type: 'string',
     id: true,
   })
-  id?: string;
+  id: string;
 
   @property({
     type: 'string',
@@ -30,15 +35,13 @@ export class User extends Entity {
 
   @property({
     type: 'string',
-    required: true,
   })
-  firstName: string;
+  firstName?: string;
 
   @property({
     type: 'string',
-    required: true,
   })
-  lastName: string;
+  lastName?: string;
 
   @hasOne(() => UserCredentials)
   userCredentials: UserCredentials;
@@ -47,9 +50,3 @@ export class User extends Entity {
     super(data);
   }
 }
-
-export interface UserRelations {
-  // describe navigational properties here
-}
-
-export type UserWithRelations = User & UserRelations;
