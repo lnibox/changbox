@@ -60,7 +60,7 @@
     "bcryptjs": "^2.4.3",
     "isemail": "^3.2.0",
     "jsonwebtoken": "^8.5.1",
-    "loopback-connector-mongodb": "^4.2.0"
+    "loopback-connector-mongodb": "^5.2.1"
   },
   "devDependencies": {
     "@loopback/build": "^3.0.0",

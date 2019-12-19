@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {signIn} from './services/user.services';
+import {Redirect} from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -49,8 +51,38 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function SignIn() {
   const classes = useStyles();
 
+  const [user, setUser] = useState({
+    email: '',
+    password: ''
+  });
+
+  const [redirect, setRedirect] = useState(false);
+
+  const redenderRedirect = function() {
+    if (redirect) {
+      return (
+        <Redirect to='/' />
+      );
+    }
+  }
+
+  const handleSubmit = function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    signIn(user).then((res) => {
+      alert(JSON.stringify(res));
+    })
+  };
+
+  const handleOnChange = function(e, type) {
+    let value = e.currentTarget.value;
+    'email' === type ? user.email = value : user.password = value;
+    setUser(user);
+  }
+
   return (
     <Container component="main" maxWidth="xs">
+      {redenderRedirect()}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -59,7 +91,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={e => handleSubmit(e)}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -70,6 +102,7 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={e => handleOnChange(e, 'email')}
           />
           <TextField
             variant="outlined"
@@ -81,6 +114,7 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={e => handleOnChange(e, 'password')}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

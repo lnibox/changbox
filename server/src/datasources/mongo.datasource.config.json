@@ -6,7 +6,6 @@
   "port": 27017,
   "user": "",
   "password": "",
-  "database": "",
-  "useNewUrlParser": true,
-  "useUnifiedTopology": true
+  "database": "changbox",
+  "useNewUrlParser": true
 }

@@ -1,28 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import logo from '../logo.svg';
 import './Home.css';
-import {Ping} from '..//utils/http.util';
 
 const Home: React.FC = () => {
-  const [greeting, setGreeting] = useState('');
-
-  function getServerData() {
-    try {
-        Ping().then(response => {
-            if (response.data && response.data.greeting) {
-                setGreeting(response.data.greeting);
-            } else {
-                setGreeting('Invalid response');
-            }
-        });
-    } catch(error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    getServerData();
-  }, [greeting]);
 
   return (
     <div className="App">
@@ -34,7 +14,6 @@ const Home: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          {greeting}
         </a>
       </header>
     </div>

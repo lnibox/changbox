@@ -128,7 +128,6 @@ export class UserController {
       // ensure the user exists, and the password is correct
       let token = '';
       try {
-        credentials.password = await this.passwordHasher.hashPassword(credentials.password);
         const user = await this.userService.verifyCredentials(credentials);
   
         // convert a User object into a UserProfile object (reduced set of properties)
