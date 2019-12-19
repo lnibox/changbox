@@ -71,6 +71,9 @@
 # .vscode
 /server/.vscode
 
+# package-lock.json
+/server/package-lock.json
+
 ######### Client folder #########
 # dependencies
 /client/node_modules
@@ -99,3 +102,6 @@
 
 # .vscode
 /client/.vscode
+
+# package-lock.json
+/client/package-lock.json
