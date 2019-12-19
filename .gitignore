@@ -68,6 +68,9 @@
 # .gitignore
 /server/.gitignore
 
+# .vscode
+/server/.vscode
+
 ######### Client folder #########
 # dependencies
 /client/node_modules
@@ -93,3 +96,6 @@
 
 # .gitignore
 /client/.gitignore
+
+# .vscode
+/client/.vscode
